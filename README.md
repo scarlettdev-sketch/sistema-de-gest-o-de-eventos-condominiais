@@ -26,7 +26,7 @@
 
 #### **O que ainda FALTA IMPLEMENTAR:**
 * **Telas Principais:**
-    * Dashboard do administrador.
+    * Continuar o dashboard do administrador.
     * Gestão completa de áreas comuns (CRUD).
     * Tela de cadastro de usuários (lógica de back-end).
     * Relatórios e estatísticas.
@@ -98,3 +98,4 @@
 [ ] CRUD de áreas comuns
 [ ] Sistema de reservas
 [ ] Relatórios
+
