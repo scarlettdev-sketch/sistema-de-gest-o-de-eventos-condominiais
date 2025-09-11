@@ -78,18 +78,80 @@ public class TelaGestaoAreas extends JFrame {
             modeloTabela.addRow(linha);
         }
     }
-    
+
     private void abrirFormularioArea(AreaComum area) {
-        // Implementar formulário de cadastro/edição
+        // Componentes do formulário
+        JTextField nomeField = new JTextField(area != null ? area.getNome() : "");
+        JTextField capacidadeField = new JTextField(area != null ? String.valueOf(area.getCapacidadeMaxima()) : "");
+        JTextField taxaField = new JTextField(area != null ? String.format("%.2f", area.getTaxaReserva()) : "");
+        JTextArea descricaoArea = new JTextArea(area != null ? area.getDescricao() : "", 5, 20);
+        JTextArea regrasArea = new JTextArea(area != null ? area.getRegrasUso() : "", 5, 20);
+
+        // Painel do formulário
+        JPanel painelFormulario = new JPanel(new GridLayout(0, 2, 5, 5));
+        painelFormulario.add(new JLabel("Nome:"));
+        painelFormulario.add(nomeField);
+        painelFormulario.add(new JLabel("Capacidade Máxima:"));
+        painelFormulario.add(capacidadeField);
+        painelFormulario.add(new JLabel("Taxa de Reserva (R$):"));
+        painelFormulario.add(taxaField);
+        painelFormulario.add(new JLabel("Descrição:"));
+        painelFormulario.add(new JScrollPane(descricaoArea));
+        painelFormulario.add(new JLabel("Regras de Uso:"));
+        painelFormulario.add(new JScrollPane(regrasArea));
+
+        String titulo = (area == null) ? "Cadastrar Nova Área" : "Editar Área";
+        int resultado = JOptionPane.showConfirmDialog(this, painelFormulario, titulo,
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (resultado == JOptionPane.OK_OPTION) {
+            try {
+                String nome = nomeField.getText();
+                int capacidade = Integer.parseInt(capacidadeField.getText());
+                double taxa = Double.parseDouble(taxaField.getText().replace(",", "."));
+                String descricao = descricaoArea.getText();
+                String regras = regrasArea.getText();
+
+                if (nome.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "O nome da área não pode ser vazio.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                AreaComum novaArea = new AreaComum(0, nome, capacidade, regras, taxa, true, descricao);
+
+                boolean sucesso;
+                if (area == null) { // Modo de Cadastro
+                    sucesso = areaDAO.cadastrarArea(novaArea);
+                } else { // Modo de Edição
+                    novaArea.setId(area.getId());
+                    sucesso = areaDAO.atualizarArea(novaArea);
+                }
+
+                if (sucesso) {
+                    JOptionPane.showMessageDialog(this, "Área salva com sucesso!");
+                    carregarAreas(); // Atualiza a tabela
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao salvar a área.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Por favor, insira valores numéricos válidos para capacidade e taxa.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
-    
+
     private void editarAreaSelecionada() {
         int linhaSelecionada = tabelaAreas.getSelectedRow();
         if (linhaSelecionada >= 0) {
-            int id = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
-            // Buscar área e abrir formulário de edição
+            int idArea = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
+            // Usando o novo método do DAO para buscar o objeto completo
+            AreaComum areaParaEditar = areaDAO.buscarAreaPorId(idArea);
+            if (areaParaEditar != null) {
+                abrirFormularioArea(areaParaEditar);
+            } else {
+                JOptionPane.showMessageDialog(this, "Área não encontrada no banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Selecione uma área para editar.");
+            JOptionPane.showMessageDialog(this, "Selecione uma área na tabela para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
     

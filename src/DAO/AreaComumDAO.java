@@ -90,4 +90,31 @@ public class AreaComumDAO {
             return false;
         }
     }
+
+    // NOVO
+    public AreaComum buscarAreaPorId(int id) {
+        String sql = "SELECT * FROM areas_comuns WHERE id = ?";
+
+        try (Connection conexao = ConexaoBD.getConexao();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return new AreaComum(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getInt("capacidade_maxima"),
+                        rs.getString("regras_uso"),
+                        rs.getDouble("taxa_reserva"),
+                        rs.getBoolean("ativa"),
+                        rs.getString("descricao")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar área por ID: " + e.getMessage());
+        }
+        return null;
+    }
 }

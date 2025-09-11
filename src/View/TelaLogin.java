@@ -70,21 +70,23 @@ public class TelaLogin extends JFrame {
         Usuario usuario = usuarioDAO.validarLogin(login, senha);
 
         if (usuario != null) {
-            lblMensagem.setText("Login bem-sucedido!");
-
             dispose(); // Fecha a tela de login
 
             String perfil = usuario.getPerfil();
             switch (perfil) {
                 case "administrador":
-                    JOptionPane.showMessageDialog(null, "Olá, Administrador! Bem-vindo.");
-                    // Aqui você chamará a tela principal do administrador
+                    // ALTERAÇÃO AQUI: Abre o painel do administrador
+                    JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo ao painel administrativo.");
+                    PainelAdmin painelAdmin = new PainelAdmin();
+                    painelAdmin.setVisible(true);
                     break;
                 case "morador":
-                    JOptionPane.showMessageDialog(null, "Olá, Morador! Bem-vindo.");
+                    JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo.");
+                    // Aqui iremos chamar a tela de morador
                     break;
                 case "funcionario":
-                    JOptionPane.showMessageDialog(null, "Olá, Funcionário! Bem-vindo.");
+                    JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo.");
+                    // Aqui iremos chamar a tela de funcionário
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Perfil não reconhecido.");
