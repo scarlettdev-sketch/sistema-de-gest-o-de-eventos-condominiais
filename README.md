@@ -22,19 +22,21 @@
     * Compilação e execução funcionais.
     * **Gerenciamento de Versão:** Repositório Git configurado e sincronizado com o GitHub.
 
----
-
-#### **O que ainda FALTA IMPLEMENTAR:**
 * **Telas Principais:**
     * Continuar o dashboard do administrador.
     * Gestão completa de áreas comuns (CRUD).
     * Tela de cadastro de usuários (lógica de back-end).
-    * Relatórios e estatísticas.
+---
+
+#### **O que ainda FALTA IMPLEMENTAR:**
+   * Relatórios e estatísticas.
+
 * **Funcionalidades de Áreas Comuns:**
     * Listar áreas disponíveis.
     * Adicionar/editar/remover áreas.
     * Definir regras e taxas.
     * Status de disponibilidade.
+
 * **Sistema de Reservas:**
     * Calendário de reservas.
     * Agendamento de áreas.
@@ -98,4 +100,5 @@
 [ ] CRUD de áreas comuns
 [ ] Sistema de reservas
 [ ] Relatórios
+
 
