@@ -72,22 +72,20 @@ public class TelaLogin extends JFrame {
         if (usuario != null) {
             dispose(); // Fecha a tela de login
 
-<<<<<<< HEAD
+
             int usuarioId = usuario.getId();
 
-=======
->>>>>>> e871ee0f739b30477297ded30f3dd0b8a076ea22
+
             String perfil = usuario.getPerfil();
             switch (perfil) {
                 case "administrador":
                     // ALTERAÇÃO AQUI: Abre o painel do administrador
                     JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo ao painel administrativo.");
-<<<<<<< HEAD
                     new PainelAdmin(usuarioId).setVisible(true);
-=======
+
                     PainelAdmin painelAdmin = new PainelAdmin();
                     painelAdmin.setVisible(true);
->>>>>>> e871ee0f739b30477297ded30f3dd0b8a076ea22
+
                     break;
                 case "morador":
                     JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo.");
