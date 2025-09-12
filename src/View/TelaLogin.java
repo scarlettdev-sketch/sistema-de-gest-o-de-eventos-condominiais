@@ -1,12 +1,10 @@
 package View;
-import javax.swing.*;
 
+import javax.swing.*;
 import DAO.UsuarioDAO;
 import Model.Usuario;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class TelaLogin extends JFrame {
     private JTextField txtLogin;
@@ -55,7 +53,7 @@ public class TelaLogin extends JFrame {
                 realizarLogin();
             }
         });
-    } // ← Esta chave estava faltando!
+    }
 
     private void realizarLogin() {
         String login = txtLogin.getText();
@@ -70,30 +68,23 @@ public class TelaLogin extends JFrame {
         Usuario usuario = usuarioDAO.validarLogin(login, senha);
 
         if (usuario != null) {
-            dispose(); // Fecha a tela de login
-
+            dispose();
 
             int usuarioId = usuario.getId();
-
-
             String perfil = usuario.getPerfil();
+
             switch (perfil) {
                 case "administrador":
-                    // ALTERAÇÃO AQUI: Abre o painel do administrador
                     JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo ao painel administrativo.");
                     new PainelAdmin(usuarioId).setVisible(true);
-
-                    PainelAdmin painelAdmin = new PainelAdmin();
-                    painelAdmin.setVisible(true);
-
                     break;
                 case "morador":
                     JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo.");
-                    // Aqui iremos chamar a tela de morador
+                    // Aqui iremos chamar a tela de morador, passando o usuarioId
                     break;
                 case "funcionario":
                     JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo.");
-                    // Aqui iremos chamar a tela de funcionário
+                    // Aqui iremos chamar a tela de funcionário, passando o usuarioId
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Perfil não reconhecido.");
