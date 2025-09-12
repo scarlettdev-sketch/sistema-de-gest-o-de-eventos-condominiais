@@ -9,21 +9,24 @@
     * **View:** `TelaLogin`, `PainelAdmin`, `GerenciarUsuariosGUI`, `VerReservasGUI` e `PublicarComunicadoGUI` (interfaces gráficas iniciais).
     * **DAO:** `UsuarioDAO`, `AreaComumDAO`, `ReservaDAO` e `ComunicadoDAO` (acesso ao banco).
     * **Config:** `DatabaseInitializer` e `ConexaoBD` (configuração).
+
 * **Banco de Dados MySQL:**
     * Estrutura completa da tabela `usuarios`.
     * Dados de teste inseridos.
     * Conexão com XAMPP.
+
 * **Sistema de Autenticação:**
     * Login funcional (admin/morador).
     * Validação de credenciais.
     * Mensagem de boas-vindas.
     * Redirecionamento do usuário para o painel de acordo com o perfil.
+
 * **Funcionalidades do Administrador:**
     * **Dashboard:** Painel principal com botões para as funcionalidades de gerenciamento.
-    * **Gerenciamento de Usuários:** Interface visual para cadastro de usuários (sem lógica de edição e exclusão).
-    * **Gerenciamento de Áreas Comuns:** Interface visual para o CRUD de áreas.
-    * **Gestão de Reservas:** Interface visual para o administrador visualizar todas as reservas em uma tabela.
+    * **CRUD de Gerenciamento:** Lógica completa para criar, ler, atualizar e deletar (`CRUD`) de usuários e áreas comuns.
+    * **Gestão de Reservas:** Interface visual para o administrador visualizar todas as reservas em uma tabela, com lógica para aprovar e rejeitar reservas.
     * **Publicação de Comunicados:** Interface visual para o administrador criar e salvar comunicados no banco de dados.
+
 * **Configuração do Projeto:**
     * Driver MySQL configurado.
     * Estrutura de pacotes organizada.
@@ -35,10 +38,9 @@
 #### **O que ainda FALTA IMPLEMENTAR:**
 
 * **Lógica de Negócio e Funcionalidades:**
-    * Finalizar o CRUD completo das telas (`GerenciarUsuariosGUI`, `GerenciarAreasComunsGUI`).
-    * Lógica para aprovar e rejeitar reservas.
     * Sistema de reservas para o morador: calendário de visualização, agendamento e controle de conflitos.
     * Sistema de visualização de comunicados para os perfis `morador` e `funcionario`.
+
 * **Relatórios e Estatísticas:**
     * Funcionalidade para gerar relatórios de uso de áreas comuns e desempenho de usuários.
 
@@ -96,7 +98,6 @@
 ---
 
 ### **Próximas Etapas**
-[x] Dashboard do administrador
-[x] CRUD de áreas comuns
-[ ] Sistema de reservas
-[ ] Relatórios
+[ ] Sistema de reservas para o morador
+[ ] Sistema de visualização de comunicados
+[ ] Relatórios e estatísticas
