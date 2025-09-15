@@ -80,7 +80,7 @@ public class TelaLogin extends JFrame {
                     break;
                 case "morador":
                     JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo.");
-                    // Aqui iremos chamar a tela de morador, passando o usuarioId
+                    new PainelMorador(usuario.getId()).setVisible(true);
                     break;
                 case "funcionario":
                     JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo.");

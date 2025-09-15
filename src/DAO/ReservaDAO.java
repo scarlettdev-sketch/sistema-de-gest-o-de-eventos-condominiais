@@ -14,25 +14,24 @@ import java.time.LocalTime;
 
 public class ReservaDAO {
 
-    public void cadastrarReserva(Reserva reserva) {
-        String sql = "INSERT INTO reservas (usuario_id, area_comum_id, data, horario_inicio, horario_fim, status) VALUES (?, ?, ?, ?, ?, ?)";
+    public boolean salvarReserva(Reserva reserva) {
+        String sql = "INSERT INTO reservas (data, horario_inicio, horario_fim, descricao, usuario_id, area_comum_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = ConexaoBD.getConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBD.getConexao();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
 
-            stmt.setInt(1, reserva.getUsuarioId());
-            stmt.setInt(2, reserva.getAreaComumId());
-            stmt.setDate(3, java.sql.Date.valueOf(reserva.getData()));
-            stmt.setTime(4, java.sql.Time.valueOf(reserva.getHorarioInicio()));
-            stmt.setTime(5, java.sql.Time.valueOf(reserva.getHorarioFim()));
-            stmt.setString(6, reserva.getStatus());
+            stmt.setDate(1, java.sql.Date.valueOf(reserva.getData()));
+            stmt.setTime(2, java.sql.Time.valueOf(reserva.getHorarioInicio()));
+            stmt.setTime(3, java.sql.Time.valueOf(reserva.getHorarioFim()));
+            stmt.setString(4, reserva.getDescricao());
+            stmt.setInt(5, reserva.getUsuarioId());
+            stmt.setInt(6, reserva.getAreaComumId());
+            stmt.setString(7, reserva.getStatus());
 
-            stmt.executeUpdate();
-            System.out.println("Reserva cadastrada com sucesso!");
-
+            return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("Erro ao cadastrar reserva: " + e.getMessage());
+            System.err.println("Erro ao salvar reserva: " + e.getMessage());
+            return false;
         }
     }
 
@@ -58,8 +57,8 @@ public class ReservaDAO {
         List<Reserva> reservas = new ArrayList<>();
         String sql = "SELECT * FROM reservas ORDER BY data DESC, horario_inicio DESC";
 
-        try (Connection conn = ConexaoBD.getConexao();
-             PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conexao = ConexaoBD.getConexao();
+             PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
@@ -72,7 +71,6 @@ public class ReservaDAO {
         return reservas;
     }
 
-    // Este é um método auxiliar para evitar duplicação de código
     private Reserva criarReservaDoResultSet(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         int usuarioId = rs.getInt("usuario_id");
@@ -81,7 +79,8 @@ public class ReservaDAO {
         LocalTime horarioInicio = rs.getTime("horario_inicio").toLocalTime();
         LocalTime horarioFim = rs.getTime("horario_fim").toLocalTime();
         String status = rs.getString("status");
+        String descricao = rs.getString("descricao");
 
-        return new Reserva(id, usuarioId, areaComumId, data, horarioInicio, horarioFim, status);
+        return new Reserva(id, usuarioId, areaComumId, data, horarioInicio, horarioFim, status, descricao);
     }
 }

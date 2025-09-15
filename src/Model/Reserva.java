@@ -12,8 +12,10 @@ public class Reserva {
     private LocalTime horarioInicio;
     private LocalTime horarioFim;
     private String status;
+    private String descricao; // NOVO: Adicione este atributo
 
-    public Reserva(int id, int usuarioId, int areaComumId, LocalDate data, LocalTime horarioInicio, LocalTime horarioFim, String status) {
+    // Construtor completo
+    public Reserva(int id, int usuarioId, int areaComumId, LocalDate data, LocalTime horarioInicio, LocalTime horarioFim, String status, String descricao) {
         this.id = id;
         this.usuarioId = usuarioId;
         this.areaComumId = areaComumId;
@@ -21,17 +23,21 @@ public class Reserva {
         this.horarioInicio = horarioInicio;
         this.horarioFim = horarioFim;
         this.status = status;
+        this.descricao = descricao;
     }
 
-    public Reserva(int usuarioId, int areaComumId, LocalDate data, LocalTime horarioInicio, LocalTime horarioFim, String status) {
+    // Construtor sem ID para novas reservas
+    public Reserva(int usuarioId, int areaComumId, LocalDate data, LocalTime horarioInicio, LocalTime horarioFim, String status, String descricao) {
         this.usuarioId = usuarioId;
         this.areaComumId = areaComumId;
         this.data = data;
         this.horarioInicio = horarioInicio;
         this.horarioFim = horarioFim;
         this.status = status;
+        this.descricao = descricao;
     }
 
+    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -86,5 +92,13 @@ public class Reserva {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }
