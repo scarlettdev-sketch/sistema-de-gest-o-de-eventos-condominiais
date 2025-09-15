@@ -1,17 +1,18 @@
 ### **Relatório do Projeto - Sistema de Gestão de Eventos Condominiais**
 
-**Status Atual do Projeto - 12/09/2025**
+**Status Atual do Projeto - 15/09/2025**
 
 #### **O que foi IMPLEMENTADO:**
 
 * **Arquitetura:**
-    * **Model:** Classes `Usuario`, `AreaComum`, `Reserva` e `Comunicado` com atributos completos.
-    * **View:** `TelaLogin`, `PainelAdmin`, `GerenciarUsuariosGUI`, `VerReservasGUI` e `PublicarComunicadoGUI` (interfaces gráficas iniciais).
-    * **DAO:** `UsuarioDAO`, `AreaComumDAO`, `ReservaDAO` e `ComunicadoDAO` (acesso ao banco).
+    * **Model:** Classes `Usuario`, `AreaComum`, `Reserva` e `Comunicado` com atributos completos e construtores corrigidos.
+    * **View:** `TelaLogin` (lógica de redirecionamento corrigida), `PainelAdmin`, `GerenciarUsuariosGUI`, `VerReservasGUI` e `PublicarComunicadoGUI` (interfaces gráficas iniciais).
+    * **DAO:** `UsuarioDAO`, `AreaComumDAO`, `ReservaDAO` e `ComunicadoDAO` (acesso ao banco, com métodos de inserção e listagem corrigidos).
     * **Config:** `DatabaseInitializer` e `ConexaoBD` (configuração).
 
 * **Banco de Dados MySQL:**
     * Estrutura completa da tabela `usuarios`.
+    * **Tabela `reservas` corrigida e funcional com `id` (chave primária), `status`, `descricao` e chaves estrangeiras (`usuario_id`, `area_comum_id`)** para total sincronia com o código.
     * Dados de teste inseridos.
     * Conexão com XAMPP.
 
@@ -23,9 +24,14 @@
 
 * **Funcionalidades do Administrador:**
     * **Dashboard:** Painel principal com botões para as funcionalidades de gerenciamento.
-    * **CRUD de Gerenciamento:** Lógica completa para criar, ler, atualizar e deletar (`CRUD`) de usuários e áreas comuns.
-    * **Gestão de Reservas:** Interface visual para o administrador visualizar todas as reservas em uma tabela, com lógica para aprovar e rejeitar reservas.
+    * **Gerenciamento de Usuários:** Interface visual para cadastro de usuários, com a lógica de back-end para inserir os dados.
+    * **Gerenciamento de Áreas Comuns:** Interface visual para o CRUD de áreas, com a lógica completa para criar, ler, atualizar e deletar.
+    * **Gestão de Reservas:** Interface visual para o administrador visualizar todas as reservas em uma tabela, com lógica para aprovar e rejeitar (a aprovação ainda não retorna ao morador).
     * **Publicação de Comunicados:** Interface visual para o administrador criar e salvar comunicados no banco de dados.
+
+* **Funcionalidades do Morador:**
+    * **Painel:** Interface principal com botões para as funcionalidades de reserva e comunicados.
+    * **Agendamento de Reservas:** Tela `FazerReservaGUI` funcional, que permite ao morador preencher os dados e salvar a reserva no banco de dados.
 
 * **Configuração do Projeto:**
     * Driver MySQL configurado.
@@ -38,8 +44,9 @@
 #### **O que ainda FALTA IMPLEMENTAR:**
 
 * **Lógica de Negócio e Funcionalidades:**
-    * Sistema de reservas para o morador: calendário de visualização, agendamento e controle de conflitos.
-    * Sistema de visualização de comunicados para os perfis `morador` e `funcionario`.
+    * **Sistema de visualização de reservas para o morador:** Criar a tela "Minha Reserva" para que ele possa ver o status de suas próprias reservas (pendentes, aprovadas, rejeitadas).
+    * **Sistema de visualização de comunicados para os perfis `morador` e `funcionario`:** Fazer a interface para que eles possam ler os comunicados publicados pelo administrador.
+    * **Controle de conflitos para o agendamento de reservas:** Implementar a validação para evitar que uma área seja reservada duas vezes no mesmo horário.
 
 * **Relatórios e Estatísticas:**
     * Funcionalidade para gerar relatórios de uso de áreas comuns e desempenho de usuários.
@@ -56,7 +63,6 @@
 #### **Passos:**
 1.  **Iniciar XAMPP:**
     * Inicie o MySQL na porta 3306.
-    * *(Dica: Caso de erro para iniciar o MySQL, abra o gerenciador de tarefas (`Ctrl + Alt + Del`) e encerre os processos `mysql` ou `sql` em aberto. É um erro comum que pode causar dor de cabeça.)*
 2.  **Sincronizar com o GitHub:**
     * No terminal do IntelliJ, use `git pull origin main` para baixar a versão mais recente do projeto.
 3.  **Criar o Banco de Dados:**
@@ -68,36 +74,10 @@
     * **Executar (bash/cmd):**
         * `java -cp "lib\mysql-connector-j-9.3.0.jar;src" Main`
 
-#### **Credenciais de Teste:**
-* **Admin:** admin / admin123
-* **Morador:** joao / 123456
-* **Morador:** maria / 123456
-* **Funcionário:** carlos / func123
-
----
-
-### **Resolução de Problemas Comuns**
-
-#### **Problemas com bibliotecas no IntelliJ:**
-* **Adicionar a biblioteca MySQL:**
-    1.  Abra `File → Project Structure` (ou `Ctrl + Alt + Shift + S`).
-    2.  Em `Libraries`, adicione o arquivo `lib/mysql-connector-j-9.3.0.jar`.
-    3.  Vincule a biblioteca ao módulo `main` em `Modules` → `Dependencies`.
-* **Configurar Encoding UTF-8:**
-    1.  Abra `File → Settings` (ou `Ctrl + Alt + S`).
-    2.  Vá para `Editor → File Encodings`.
-    3.  Defina `Global Encoding` e `Project Encoding` para `UTF-8`.
-    4.  Marque `✅ Transparent native-to-ascii conversion`.
-
-#### **Remover arquivos `.class` (se necessário):**
-* **PowerShell:**
-    * `Get-ChildItem -Path src -Recurse -Filter "*.class" | Remove-Item -Force`
-* **Cmd:**
-    * `cmd /c "del /s src\*.class"`
-
 ---
 
 ### **Próximas Etapas**
-[ ] Sistema de reservas para o morador
+[ ] Sistema de visualização de reservas para o morador
 [ ] Sistema de visualização de comunicados
-[ ] Relatórios e estatísticas
+[ ] Controle de conflitos para agendamento
+[ ] Relatórios
