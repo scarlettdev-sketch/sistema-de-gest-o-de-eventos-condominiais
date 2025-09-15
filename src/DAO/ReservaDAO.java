@@ -15,7 +15,7 @@ import java.time.LocalTime;
 public class ReservaDAO {
 
     public boolean salvarReserva(Reserva reserva) {
-        String sql = "INSERT INTO reservas (data, horario_inicio, horario_fim, descricao, usuario_id, area_comum_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO reservas (id, usuario_id, area_comum_id, horario_inicio, horario_fim, status, descricao) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conexao = ConexaoBD.getConexao();
              PreparedStatement stmt = conexao.prepareStatement(sql)) {

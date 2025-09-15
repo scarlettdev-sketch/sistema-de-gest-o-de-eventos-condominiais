@@ -112,4 +112,23 @@ public class AreaComumDAO {
         }
         return null;
     }
+
+    public int buscarIdPorNome(String nomeArea) {
+        String sql = "SELECT id FROM areas_comuns WHERE nome = ?";
+
+        try (Connection conexao = ConexaoBD.getConexao();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setString(1, nomeArea);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar ID da área por nome: " + e.getMessage());
+        }
+        return -1;
+    }
 }
