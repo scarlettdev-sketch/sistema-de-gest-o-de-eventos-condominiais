@@ -1,37 +1,43 @@
 ### **Relatório do Projeto - Sistema de Gestão de Eventos Condominiais**
 
-**Status Atual do Projeto - 15/09/2025**
+**Status Atual do Projeto - 16/09/2025**
 
 #### **O que foi IMPLEMENTADO:**
 
 * **Arquitetura:**
     * **Model:** Classes `Usuario`, `AreaComum`, `Reserva` e `Comunicado` com atributos completos e construtores corrigidos.
-    * **View:** `TelaLogin` (lógica de redirecionamento corrigida), `PainelAdmin`, `GerenciarUsuariosGUI`, `VerReservasGUI` e `PublicarComunicadoGUI` (interfaces gráficas iniciais).
+    * **View:** `TelaLogin` (lógica de redirecionamento corrigida), `PainelAdmin`, `GerenciarUsuariosGUI`, `VerReservasGUI`, `PublicarComunicadoGUI`, **`MinhasReservasGUI`** e **`VerComunicadosGUI`** (interfaces gráficas iniciais).
     * **DAO:** `UsuarioDAO`, `AreaComumDAO`, `ReservaDAO` e `ComunicadoDAO` (acesso ao banco, com métodos de inserção e listagem corrigidos).
     * **Config:** `DatabaseInitializer` e `ConexaoBD` (configuração).
 
 * **Banco de Dados MySQL:**
     * Estrutura completa da tabela `usuarios`.
     * **Tabela `reservas` corrigida e funcional com `id` (chave primária), `status`, `descricao` e chaves estrangeiras (`usuario_id`, `area_comum_id`)** para total sincronia com o código.
+    * **Tabela `comunicados` criada e funcional.**
     * Dados de teste inseridos.
     * Conexão com XAMPP.
 
 * **Sistema de Autenticação:**
-    * Login funcional (admin/morador).
+    * Login funcional (admin/morador/funcionário).
     * Validação de credenciais.
     * Mensagem de boas-vindas.
     * Redirecionamento do usuário para o painel de acordo com o perfil.
 
 * **Funcionalidades do Administrador:**
     * **Dashboard:** Painel principal com botões para as funcionalidades de gerenciamento.
-    * **Gerenciamento de Usuários:** Interface visual para cadastro de usuários, com a lógica de back-end para inserir os dados.
-    * **Gerenciamento de Áreas Comuns:** Interface visual para o CRUD de áreas, com a lógica completa para criar, ler, atualizar e deletar.
-    * **Gestão de Reservas:** Interface visual para o administrador visualizar todas as reservas em uma tabela, com lógica para aprovar e rejeitar (a aprovação ainda não retorna ao morador).
+    * **CRUD de Gerenciamento:** Lógica completa para criar, ler, atualizar e deletar (`CRUD`) de usuários e áreas comuns.
+    * **Gestão de Reservas:** Interface visual para o administrador visualizar todas as reservas em uma tabela, com a lógica para aprovar e rejeitar.
     * **Publicação de Comunicados:** Interface visual para o administrador criar e salvar comunicados no banco de dados.
 
 * **Funcionalidades do Morador:**
     * **Painel:** Interface principal com botões para as funcionalidades de reserva e comunicados.
     * **Agendamento de Reservas:** Tela `FazerReservaGUI` funcional, que permite ao morador preencher os dados e salvar a reserva no banco de dados.
+    * **Visualização de Reservas:** Tela `MinhasReservasGUI` para que o morador veja suas próprias reservas.
+    * **Visualização de Comunicados:** Interface para o morador ler os comunicados.
+
+* **Funcionalidades do Funcionário:**
+    * **Painel:** Interface principal com botões para as funcionalidades de agendamentos e comunicados.
+    * **Visualização de Comunicados:** Interface para o funcionário ler os comunicados.
 
 * **Configuração do Projeto:**
     * Driver MySQL configurado.
@@ -44,8 +50,7 @@
 #### **O que ainda FALTA IMPLEMENTAR:**
 
 * **Lógica de Negócio e Funcionalidades:**
-    * **Sistema de visualização de reservas para o morador:** Criar a tela "Minha Reserva" para que ele possa ver o status de suas próprias reservas (pendentes, aprovadas, rejeitadas).
-    * **Sistema de visualização de comunicados para os perfis `morador` e `funcionario`:** Fazer a interface para que eles possam ler os comunicados publicados pelo administrador.
+    * **Inserir uma descrição na rejeição de reserva:** A lógica de rejeição precisa ser aprimorada para permitir que o administrador justifique o motivo da rejeição.
     * **Controle de conflitos para o agendamento de reservas:** Implementar a validação para evitar que uma área seja reservada duas vezes no mesmo horário.
 
 * **Relatórios e Estatísticas:**
@@ -77,7 +82,6 @@
 ---
 
 ### **Próximas Etapas**
-[ ] Sistema de visualização de reservas para o morador
-[ ] Sistema de visualização de comunicados
+[ ] Inserir descrição na rejeição de reserva
 [ ] Controle de conflitos para agendamento
-[ ] Relatórios
+[ ] Relatórios e estatísticas
