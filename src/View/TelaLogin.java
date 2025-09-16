@@ -5,6 +5,7 @@ import DAO.UsuarioDAO;
 import Model.Usuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import View.PainelFuncionario;
 
 public class TelaLogin extends JFrame {
     private JTextField txtLogin;
@@ -84,7 +85,7 @@ public class TelaLogin extends JFrame {
                     break;
                 case "funcionario":
                     JOptionPane.showMessageDialog(null, "Olá, " + usuario.getNomeCompleto() + "! Bem-vindo.");
-                    // Aqui iremos chamar a tela de funcionário, passando o usuarioId
+                    new PainelFuncionario(usuarioId).setVisible(true);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Perfil não reconhecido.");

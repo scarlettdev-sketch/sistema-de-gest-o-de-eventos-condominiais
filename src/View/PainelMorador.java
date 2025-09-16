@@ -3,6 +3,8 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 import View.FazerReservaGUI;
+import View.MinhasReservasGUI;
+import View.VerComunicadosGUI;
 
 public class PainelMorador extends JFrame {
 
@@ -42,5 +44,17 @@ public class PainelMorador extends JFrame {
         painelPrincipal.add(btnVerComunicados);
 
         add(painelPrincipal);
+
+        // Lógica para o botão "Minhas Reservas"
+        btnVerReservas.addActionListener(e -> {
+            MinhasReservasGUI telaMinhasReservas = new MinhasReservasGUI(this.usuarioId);
+            telaMinhasReservas.setVisible(true);
+        });
+
+        // Lógica para o botão "Ver Comunicados"
+        btnVerComunicados.addActionListener(e -> {
+            VerComunicadosGUI telaComunicados = new VerComunicadosGUI();
+            telaComunicados.setVisible(true);
+        });
     }
 }

@@ -83,4 +83,25 @@ public class ReservaDAO {
 
         return new Reserva(id, usuarioId, areaComumId, data, horarioInicio, horarioFim, status, descricao);
     }
+
+    public List<Reserva> listarReservasPorUsuarioId(int usuarioId){
+        List<Reserva> reservas = new ArrayList<>();
+        String sql = "SELECT * FROM reservas WHERE usuario_id = ? ORDER BY data DESC, horario_inicio DESC";
+
+        try (Connection conexao = ConexaoBD.getConexao();
+             PreparedStatement stmt = conexao.prepareStatement(sql)){
+
+            stmt.setInt(1, usuarioId);
+
+            try (ResultSet rs = stmt.executeQuery()){
+                while (rs.next()){
+                    reservas.add(criarReservaDoResultSet(rs));
+                }
+            }
+        } catch (SQLException e){
+            System.err.println("Erro ao listar reservas do usuário:" + e.getMessage());
+            e.printStackTrace();
+        }
+        return reservas;
+    }
 }
