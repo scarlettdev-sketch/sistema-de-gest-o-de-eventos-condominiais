@@ -1,87 +1,105 @@
-### **Relatório do Projeto - Sistema de Gestão de Eventos Condominiais**
+# Sistema de Gestão de Eventos Condominiais
 
-**Status Atual do Projeto - 16/09/2025**
+**Status do Projeto:** Versão 1.0 - Concluído (18/09/2025)
 
-#### **O que foi IMPLEMENTADO:**
+Este projeto, desenvolvido como requisito acadêmico, consiste em um sistema desktop completo para a gestão de áreas comuns e comunicação em um condomínio. A aplicação permite que administradores, moradores e funcionários interajam com o sistema de acordo com seus perfis de acesso.
 
-* **Arquitetura:**
-    * **Model:** Classes `Usuario`, `AreaComum`, `Reserva` e `Comunicado` com atributos completos e construtores corrigidos.
-    * **View:** `TelaLogin` (lógica de redirecionamento corrigida), `PainelAdmin`, `GerenciarUsuariosGUI`, `VerReservasGUI`, `PublicarComunicadoGUI`, **`MinhasReservasGUI`** e **`VerComunicadosGUI`** (interfaces gráficas iniciais).
-    * **DAO:** `UsuarioDAO`, `AreaComumDAO`, `ReservaDAO` e `ComunicadoDAO` (acesso ao banco, com métodos de inserção e listagem corrigidos).
-    * **Config:** `DatabaseInitializer` e `ConexaoBD` (configuração).
+## Funcionalidades Implementadas
 
-* **Banco de Dados MySQL:**
-    * Estrutura completa da tabela `usuarios`.
-    * **Tabela `reservas` corrigida e funcional com `id` (chave primária), `status`, `descricao` e chaves estrangeiras (`usuario_id`, `area_comum_id`)** para total sincronia com o código.
-    * **Tabela `comunicados` criada e funcional.**
-    * Dados de teste inseridos.
-    * Conexão com XAMPP.
+### Arquitetura e Tecnologia
+- **Arquitetura:** Padrão de camadas bem definido (Model, View, DAO, Config), facilitando a manutenção e escalabilidade.
+- **Banco de Dados:** Schema relacional robusto em MySQL, com integridade referencial garantida por chaves estrangeiras.
+- **Gerenciamento de Dependências:** O projeto utiliza **Maven** para gerenciar as bibliotecas externas (FlatLaf, MySQL Connector), garantindo consistência no ambiente de desenvolvimento.
+- **UI/UX:** A interface gráfica foi modernizada com o tema **FlatLaf (Light)**, proporcionando uma experiência de usuário limpa e agradável, com uso de ícones e dicas de interface.
 
-* **Sistema de Autenticação:**
-    * Login funcional (admin/morador/funcionário).
-    * Validação de credenciais.
-    * Mensagem de boas-vindas.
-    * Redirecionamento do usuário para o painel de acordo com o perfil.
+### Funcionalidades do Administrador (`admin / admin123`)
+- **Dashboard Central:** Painel de controle com acesso a todas as funcionalidades administrativas.
+- **Gestão de Usuários (CRUD):** Interface completa para criar, listar, atualizar e excluir usuários de todos os perfis.
+- **Gestão de Áreas Comuns (CRUD):** Interface completa para criar, listar, atualizar e desativar áreas comuns.
+- **Gestão de Reservas:** Visualização de todas as reservas solicitadas.
+  - **Aprovação/Rejeição:** Funcionalidade para aprovar ou rejeitar reservas pendentes.
+  - **Justificativa de Rejeição:** Ao rejeitar, o administrador pode inserir um motivo que fica registrado no sistema.
+- **Publicação de Comunicados:** Ferramenta para criar e publicar comunicados gerais para todos os usuários.
+- **Relatórios Gerenciais:** Tela de estatísticas que exibe um relatório de uso por área comum, incluindo o número de reservas e o valor total arrecadado.
 
-* **Funcionalidades do Administrador:**
-    * **Dashboard:** Painel principal com botões para as funcionalidades de gerenciamento.
-    * **CRUD de Gerenciamento:** Lógica completa para criar, ler, atualizar e deletar (`CRUD`) de usuários e áreas comuns.
-    * **Gestão de Reservas:** Interface visual para o administrador visualizar todas as reservas em uma tabela, com a lógica para aprovar e rejeitar.
-    * **Publicação de Comunicados:** Interface visual para o administrador criar e salvar comunicados no banco de dados.
+### Funcionalidades do Morador (`joao / 123456`)
+- **Painel do Morador:** Tela principal com acesso às suas funcionalidades.
+- **Solicitação de Reserva:**
+  - Interface para selecionar área, data e horário para um evento.
+  - **Sistema Anti-Conflito:** O sistema valida em tempo real se o horário desejado já está ocupado, impedindo agendamentos duplos.
+- **Visualização de Suas Reservas:** O morador pode consultar o status de suas próprias solicitações de reserva.
+- **Mural de Comunicados:** Tela interativa para visualizar os comunicados publicados pela administração.
 
-* **Funcionalidades do Morador:**
-    * **Painel:** Interface principal com botões para as funcionalidades de reserva e comunicados.
-    * **Agendamento de Reservas:** Tela `FazerReservaGUI` funcional, que permite ao morador preencher os dados e salvar a reserva no banco de dados.
-    * **Visualização de Reservas:** Tela `MinhasReservasGUI` para que o morador veja suas próprias reservas.
-    * **Visualização de Comunicados:** Interface para o morador ler os comunicados.
+### Funcionalidades do Funcionário (`carlos / func123`)
+- **Painel do Funcionário:** Tela de acesso simplificada.
+- **Agenda Geral:** Visualização de todas as reservas **aprovadas**, permitindo que a equipe se programe para a preparação e limpeza das áreas.
+- **Mural de Comunicados:** Acesso de leitura aos comunicados da administração.
 
-* **Funcionalidades do Funcionário:**
-    * **Painel:** Interface principal com botões para as funcionalidades de agendamentos e comunicados.
-    * **Visualização de Comunicados:** Interface para o funcionário ler os comunicados.
+## Tecnologias Utilizadas
+- **Linguagem:** Java 21
+- **Interface Gráfica:** Swing
+- **Banco de Dados:** MySQL
+- **Build/Dependency Manager:** Apache Maven
+- **Look and Feel:** FlatLaf
+- **Conector BD:** MySQL Connector/J
 
-* **Configuração do Projeto:**
-    * Driver MySQL configurado.
-    * Estrutura de pacotes organizada.
-    * Compilação e execução funcionais.
-    * **Gerenciamento de Versão:** Repositório Git configurado e **sincronizado na branch `main`**.
+## Instruções para Rodar o Projeto
 
----
+### Pré-requisitos
+- Java JDK 17+
+- Apache Maven
+- XAMPP (ou qualquer servidor MySQL)
 
-#### **O que ainda FALTA IMPLEMENTAR:**
+### Passos
 
-* **Lógica de Negócio e Funcionalidades:**
-    * **Inserir uma descrição na rejeição de reserva:** A lógica de rejeição precisa ser aprimorada para permitir que o administrador justifique o motivo da rejeição.
-    * **Controle de conflitos para o agendamento de reservas:** Implementar a validação para evitar que uma área seja reservada duas vezes no mesmo horário.
+1.  **Iniciar o Servidor MySQL:**
+    - Inicie o MySQL na porta `3306`.
 
-* **Relatórios e Estatísticas:**
-    * Funcionalidade para gerar relatórios de uso de áreas comuns e desempenho de usuários.
+2.  **Configurar o Banco de Dados:**
+    - Acesse o `phpMyAdmin` (ou um cliente SQL de sua preferência).
+    - **IMPORTANTE:** Caso já exista um banco de dados `condominio`, **exclua-o (DROP)** para garantir uma instalação limpa.
+    - Crie um novo banco de dados chamado `condominio`.
+    - Execute o script localizado em `database/schema.sql` para criar todas as tabelas e inserir os dados de teste.
 
----
+3.  **Executar a Aplicação:**
 
-### **Instruções para Rodar o Projeto**
+    **Opção 1: Pelo IntelliJ IDEA (Recomendado)**
+    - Abra o projeto no IntelliJ.
+    - Espere a IDE sincronizar com o `pom.xml` e baixar as dependências.
+    - Abra o arquivo `src/main/java/Main.java`.
+    - Clique no botão verde de "Play" (▶) ao lado do método `main`.
 
-#### **Pré-requisitos:**
-* Java JDK 21+
-* XAMPP (MySQL)
-* IntelliJ IDEA ou outra IDE (recomendado IntelliJ para Java).
+    **Opção 2: Pela Linha de Comando**
+    - Navegue até a pasta raiz do projeto via terminal.
+    - Compile e empacote o projeto:
+      ```bash
+      mvn clean install
+      ```
+    - Execute o arquivo `.jar` gerado:
+      ```bash
+      java -jar target/gestao-condominio-1.0-SNAPSHOT.jar
+      ```
 
-#### **Passos:**
-1.  **Iniciar XAMPP:**
-    * Inicie o MySQL na porta 3306.
-2.  **Sincronizar com o GitHub:**
-    * No terminal do IntelliJ, use `git pull origin main` para baixar a versão mais recente do projeto.
-3.  **Criar o Banco de Dados:**
-    * Acesse `http://localhost/phpmyadmin`
-    * Execute o script `database/schema.sql` no phpMyAdmin.
-4.  **Compilar e Executar:**
-    * **Compilar (bash/cmd):**
-        * `javac -encoding UTF-8 -cp "lib\mysql-connector-j-9.3.0.jar;src" src\Main.java src\Config\*.java src\DAO\*.java src\Model\*.java src\View\*.java`
-    * **Executar (bash/cmd):**
-        * `java -cp "lib\mysql-connector-j-9.3.0.jar;src" Main`
+## Estrutura do Projeto Maven
+```
+sistema-de-gest-o-de-eventos-condominiais
+├── database
+│   └── schema.sql
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   ├── Config
+│   │   │   ├── DAO
+│   │   │   ├── Model
+│   │   │   ├── View
+│   │   │   └── Main.java
+│   │   └── resources
+│   │       └── icons
+├── pom.xml
+└── README.md
+```
 
----
-
-### **Próximas Etapas**
-[ ] Inserir descrição na rejeição de reserva
-[ ] Controle de conflitos para agendamento
-[ ] Relatórios e estatísticas
+## Credenciais de Teste
+- **Admin:** `admin` / `admin123`
+- **Morador:** `joao` / `123456`
+- **Funcionário:** `carlos` / `func123`
