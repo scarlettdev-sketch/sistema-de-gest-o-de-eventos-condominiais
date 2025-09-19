@@ -58,27 +58,18 @@ Este projeto, desenvolvido como requisito acadêmico, consiste em um sistema des
 2.  **Configurar o Banco de Dados:**
     - Acesse o `phpMyAdmin` (ou um cliente SQL de sua preferência).
     - **IMPORTANTE:** Caso já exista um banco de dados `condominio`, **exclua-o (DROP)** para garantir uma instalação limpa.
-    - Crie um novo banco de dados chamado `condominio`.
+    - Cole o conteúdo de database/schema.sql e EXECUTE.
     - Execute o script localizado em `database/schema.sql` para criar todas as tabelas e inserir os dados de teste.
 
 3.  **Executar a Aplicação:**
 
-    **Opção 1: Pelo IntelliJ IDEA (Recomendado)**
+    **Pelo IntelliJ IDEA (Recomendado)**
     - Abra o projeto no IntelliJ.
     - Espere a IDE sincronizar com o `pom.xml` e baixar as dependências.
     - Abra o arquivo `src/main/java/Main.java`.
     - Clique no botão verde de "Play" (▶) ao lado do método `main`.
 
-    **Opção 2: Pela Linha de Comando**
-    - Navegue até a pasta raiz do projeto via terminal.
-    - Compile e empacote o projeto:
-      ```bash
-      mvn clean install
-      ```
-    - Execute o arquivo `.jar` gerado:
-      ```bash
-      java -jar target/gestao-condominio-1.0-SNAPSHOT.jar
-      ```
+    `
 
 ## Estrutura do Projeto Maven
 ```
