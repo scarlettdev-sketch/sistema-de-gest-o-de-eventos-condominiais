@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="gestao-condominio" />
         <module name="sistema-de-gest-o-de-eventos-condominiais-master" />
       </profile>
     </annotationProcessing>

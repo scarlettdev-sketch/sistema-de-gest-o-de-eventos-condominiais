@@ -27,7 +27,15 @@ public class MinhasReservasGUI extends JFrame {
         //Criação de Tabela
 
         String[] colunas = {"ID", "Área Comum ID", "Data", "Horário Inicio", "Horário Fim", "Status", "Descrição"};
-        tableModel = new DefaultTableModel(colunas, 0);
+        // O método que torna uma célula não editável na tabela
+        tableModel = new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // A coluna "Status" é a de índice 5 (lembre-se que a contagem começa do 0)
+                // Este método retorna 'false' se a coluna for a de Status, impedindo a edição.
+                return column != 5;
+            }
+        };
         tabelaReservas = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(tabelaReservas);
 
