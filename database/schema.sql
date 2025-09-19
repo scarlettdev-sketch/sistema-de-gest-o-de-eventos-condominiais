@@ -1,54 +1,74 @@
--- Criar banco de dados
-CREATE DATABASE IF NOT EXISTS condominio;
-USE condominio;
+-- Criar banco de dados se não existir
+CREATE DATABASE IF NOT EXISTS `condominio` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
--- Criar tabela de usuários (se não existir)
--- Criar tabela de usuários compatível com o DAO
-CREATE TABLE IF NOT EXISTS usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome_completo VARCHAR(100) NOT NULL,
-    cpf VARCHAR(14),
-    email VARCHAR(100),
-    unidade VARCHAR(10),
-    login VARCHAR(50) UNIQUE NOT NULL,
-    senha_hash VARCHAR(255) NOT NULL,
-    perfil ENUM('administrador', 'morador', 'funcionario') DEFAULT 'morador',
-    ativo BOOLEAN DEFAULT TRUE,
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Usar o banco de dados
+USE `condominio`;
+
+-- Tabela de Usuários
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `nome_completo` VARCHAR(100) NOT NULL,
+  `cpf` VARCHAR(14) NULL,
+  `email` VARCHAR(100) NULL,
+  `unidade` VARCHAR(20) NULL,
+  `login` VARCHAR(50) NOT NULL UNIQUE,
+  `senha_hash` VARCHAR(255) NOT NULL,
+  `perfil` ENUM('administrador', 'morador', 'funcionario') NOT NULL DEFAULT 'morador',
+  `ativo` BOOLEAN NOT NULL DEFAULT TRUE,
+  `data_criacao` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Criar tabela de áreas comuns
-CREATE TABLE IF NOT EXISTS areas_comuns (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    capacidade_maxima INT NOT NULL,
-    regras_uso TEXT,
-    taxa_reserva DECIMAL(10,2) DEFAULT 0.00,
-    ativa BOOLEAN DEFAULT TRUE,
-    descricao TEXT,
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- Tabela de Áreas Comuns
+CREATE TABLE IF NOT EXISTS `areas_comuns` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `nome` VARCHAR(100) NOT NULL UNIQUE,
+  `descricao` TEXT NULL,
+  `capacidade_maxima` INT NOT NULL,
+  `regras_uso` TEXT NULL,
+  `taxa_reserva` DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+  `ativa` BOOLEAN NOT NULL DEFAULT TRUE,
+  `data_criacao` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Inserir usuários de teste
-INSERT IGNORE INTO usuarios (nome_completo, login, senha_hash, perfil) VALUES
+-- Tabela de Reservas
+CREATE TABLE IF NOT EXISTS `reservas` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `usuario_id` INT NULL,
+  `area_comum_id` INT NOT NULL,
+  `data_reserva` DATE NOT NULL,
+  `horario_inicio` TIME NOT NULL,
+  `horario_fim` TIME NOT NULL,
+  `descricao` TEXT NULL,
+  `motivo_rejeicao` TEXT NULL,
+  `status` ENUM('pendente', 'aprovada', 'rejeitada', 'cancelada') NOT NULL DEFAULT 'pendente',
+  `data_solicitacao` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`usuario_id`) REFERENCES `usuarios`(`id`) ON DELETE SET NULL,
+  FOREIGN KEY (`area_comum_id`) REFERENCES `areas_comuns`(`id`) ON DELETE CASCADE
+);
+
+-- Tabela de Comunicados
+CREATE TABLE IF NOT EXISTS `comunicados` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `usuario_id` INT NULL,
+  `titulo` VARCHAR(255) NOT NULL,
+  `mensagem` TEXT NOT NULL,
+  `data_publicacao` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`usuario_id`) REFERENCES `usuarios`(`id`) ON DELETE SET NULL
+);
+
+
+-- =================================================================
+-- INSERÇÃO DE DADOS DE TESTE (SOMENTE SE NÃO EXISTIREM)
+-- =================================================================
+
+INSERT IGNORE INTO `usuarios` (`nome_completo`, `login`, `senha_hash`, `perfil`) VALUES
 ('Administrador do Sistema', 'admin', 'admin123', 'administrador'),
 ('João Silva', 'joao', '123456', 'morador'),
-('Maria Santos', 'maria', '123456', 'morador'),
-('Carlos Funcionário', 'carlos', 'func123', 'funcionario');
+('Maria Oliveira', 'maria', '123456', 'morador'),
+('Carlos Souza', 'carlos', 'func123', 'funcionario');
 
--- Inserir dados iniciais de áreas comuns
-INSERT IGNORE INTO areas_comuns (nome, capacidade_maxima, regras_uso, taxa_reserva, descricao) VALUES
-('Salão de Festas', 50, 'Proibido fumar. Limpeza obrigatória após uso.', 150.00, 'Salão principal para eventos'),
-('Churrasqueira', 20, 'Uso até 22h. Limpeza obrigatória.', 80.00, 'Área de churrasqueira'),
-('Piscina', 30, 'Uso até 20h. Crianças acompanhadas.', 0.00, 'Piscina adulto e infantil'),
-('Quadra Esportiva', 20, 'Uso até 22h. Calçado adequado obrigatório.', 50.00, 'Quadra poliesportiva');
-
-CREATE TABLE areas_comuns (
-    id_area INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    capacidade_maxima INT,
-    regras_uso TEXT,  -- Adicione esta linha
-    taxa_reserva DECIMAL(10, 2),
-    descricao TEXT
-);
+INSERT IGNORE INTO `areas_comuns` (`nome`, `descricao`, `capacidade_maxima`, `taxa_reserva`) VALUES
+('Salão de Festas', 'Amplo salão para eventos e confraternizações.', 50, 150.00),
+('Churrasqueira Gourmet', 'Área com churrasqueira, forno de pizza e mesas.', 25, 50.00),
+('Piscina Adulto e Infantil', 'Área de lazer com piscina para todas as idades.', 30, 0.00),
+('Quadra Poliesportiva', 'Quadra para prática de futsal, vôlei e basquete.', 20, 25.50);
